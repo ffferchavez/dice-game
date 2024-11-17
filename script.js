@@ -131,22 +131,22 @@ const resetGame = () => {
 };
 
 const checkForStraights = (arr) => {
-  const uniqueSorted = [...new Set(arr)].sort((a, b) => a - b);
-  
-  const isLargeStraight = uniqueSorted.length === 5 && uniqueSorted[4] - uniqueSorted[0] === 4;
-  
-  const isSmallStraight = uniqueSorted.length >= 4 && (
-    uniqueSorted.slice(0, 4).every((val, index) => val + 1 === uniqueSorted[index + 1]) ||
-    uniqueSorted.slice(1, 5).every((val, index) => val + 1 === uniqueSorted[index + 1])
-  );
+  const sortedNumbersArr = arr.sort((a, b) => a - b);
+  const uniqueNumbersArr = [...new Set(sortedNumbersArr)];
+  const uniqueNumbersStr = uniqueNumbersArr.join("");
 
-  if (isLargeStraight) {
-    updateRadioOption(4, 40);
-  } else if (isSmallStraight) {
+  const smallStraightsArr = ["1234", "2345", "3456"];
+  const largeStraightsArr = ["12345", "23456"];
+
+ if (smallStraightsArr.some(straight => uniqueNumbersStr.includes(straight))) {
     updateRadioOption(3, 30);
-  } else {
-    updateRadioOption(5, 0);
   }
+
+  if (largeStraightsArr.includes(uniqueNumbersStr)) {
+    updateRadioOption(4, 40);
+  }
+
+  updateRadioOption(5, 0);
 };
 
 rollDiceBtn.addEventListener("click", () => {
